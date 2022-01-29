@@ -6,6 +6,7 @@ Description: New plugin to learn something new
 Version: 1.0.0
 Author: Fazle Bari
 Author URI: https://www.chitabd.com/
-Licence: GPL Or leater
+Licence: GPLv2 Or leater
 Text Domain: megh
+Domain Path: /languages/
 */
