@@ -10,3 +10,13 @@ Licence: GPLv2 Or leater
 Text Domain: megh
 Domain Path: /languages/
 */
+
+/**
+ * load plugin textdomain
+ *
+ * @return void
+ */
+function megh_load_textdomain(){
+    load_plugin_textdomain( 'megh' ,false, dirname(__FILE__ . '/languages') );
+}
+add_action( 'plugins_loaded' , 'megh_load_textdomain');
