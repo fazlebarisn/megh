@@ -45,7 +45,10 @@ function megh_display_qr_code( $content ){
         return $content;
     }
 
-    $image_src = sprintf( 'https://api.qrserver.com/v1/create-qr-code/?data=%s' , $current_post_url );
+    // Add image dimension filter
+    $image_dimension = apply_filters( 'megh_qr_code_image_dimension' , '220x220');
+
+    $image_src = sprintf( 'https://api.qrserver.com/v1/create-qr-code/?data=%s&size=%s&margin=0' , $current_post_url, $image_dimension );
 
     $content .= sprintf("<div><img src='%s' alt='%s'/></div>" , $image_src, $current_post_title );
 
