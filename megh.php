@@ -40,3 +40,33 @@ function meghWordCount( $content ){
 
 }
 add_filter( 'the_content' , 'meghWordCount');
+
+/**
+ * Reading time calcuate
+ *
+ * @param [type] $content
+ * @return void
+ */
+function meghreadingTime( $content ){
+
+    $stripped_content = strip_tags( $content );
+    $word_number = str_word_count( $stripped_content );
+
+    $reading_minute = floor( $word_number / 200 );
+    $reading_sec = floor( $word_number % 200 / ( 200/60 ) );
+
+    $is_visible = apply_filters( 'megh_display_reading_time' , true );
+
+    if( $is_visible ){
+
+        $lable = __('Total reading time is ' , 'megh' );
+        $lable = apply_filters( 'megh_reading_time_lable' , $lable );
+        $tag = apply_filters( 'megh_reading_time_tag' , 'h2');
+
+        $content.= sprintf( '<%s>%s: %s minute %s Sec<%s>' , $tag, $lable, $reading_minute, $reading_sec, $tag );
+    }
+    
+    return $content;
+
+}
+add_filter( 'the_content' , 'meghreadingTime');
