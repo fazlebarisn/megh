@@ -20,3 +20,14 @@ function meghLoadTextdomain(){
     load_plugin_textdomain( 'megh' ,false, dirname(__FILE__ . '/languages') );
 }
 add_action( 'plugins_loaded' , 'meghLoadTextdomain');
+
+function megh_display_qr_code( $content ){
+
+    $current_post_id = get_the_ID();
+    $current_post_url = urldecode( get_the_permalink( $current_post_id ) );
+    $image_src = sprintf( 'https://api.qrserver.com/v1/create-qr-code/?data=%s' , $current_post_url );
+
+    return $content;
+
+}
+add_filter( 'the_content' , 'megh_display_qr_code' );
