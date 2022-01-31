@@ -56,3 +56,40 @@ function megh_display_qr_code( $content ){
 
 }
 add_filter( 'the_content' , 'megh_display_qr_code' );
+
+/**
+ * add field in General section under Settings menu
+ *
+ * @return void
+ */
+function megh_setting_init(){
+
+    add_settings_field('megh_height' , __('QR code height' , 'megh'), 'meghQrCodeHeight' , 'general');
+    add_settings_field('megh_width' , __('QR code width' , 'megh'), 'meghQrCodeWidth' , 'general');
+
+    register_setting('general' , 'megh_height' , array('sanitize_callback' => 'esc_attr') );
+    register_setting('general' , 'megh_width' , array('sanitize_callback' => 'esc_attr') );
+
+}
+
+/**
+ * Disply height field
+ *
+ * @return void
+ */
+function meghQrCodeHeight(){
+    $height = get_option('megh_height');
+    printf("<input type='text' id='%s' name='%s' value='%s'>" , 'megh_height' , 'megh_height' , $height );
+}
+
+/**
+ * Disply width field
+ *
+ * @return void
+ */
+function meghQrCodeWidth(){
+    $width = get_option('megh_width');
+    printf("<input type='text' id='%s' name='%s' value='%s'>" , 'megh_width' , 'megh_width' , $width );
+}
+
+add_action( 'admin_init' , 'megh_setting_init' );
