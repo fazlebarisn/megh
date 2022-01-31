@@ -45,8 +45,13 @@ function megh_display_qr_code( $content ){
         return $content;
     }
 
+    // get data from users
+    $width = get_option('megh_width');
+    $height = get_option('megh_height');
+    $width ? $width : 220;
+    $height ? $height : 220;
     // Add image dimension filter
-    $image_dimension = apply_filters( 'megh_qr_code_image_dimension' , '220x220');
+    $image_dimension = apply_filters( 'megh_qr_code_image_dimension' , "{$width}x{$height}");
 
     $image_src = sprintf( 'https://api.qrserver.com/v1/create-qr-code/?data=%s&size=%s&margin=0' , $current_post_url, $image_dimension );
 
