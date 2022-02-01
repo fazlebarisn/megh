@@ -60,7 +60,7 @@ function megh_display_qr_code( $content ){
     return $content;
 
 }
-add_filter( 'the_content' , 'megh_display_qr_code' );
+add_filter( 'the_content', 'megh_display_qr_code' );
 
 /**
  * add field in General section under Settings menu
@@ -69,14 +69,19 @@ add_filter( 'the_content' , 'megh_display_qr_code' );
  */
 function megh_setting_init(){
 
-    add_settings_field('megh_height' , __('QR code height' , 'megh'), 'meghQrCodeHeight' , 'general');
-    add_settings_field('megh_width' , __('QR code width' , 'megh'), 'meghQrCodeWidth' , 'general');
+    add_settings_section('megh_qr_code', __('Qr Code Section', 'megh'), 'meghQrCodeSection', 'general');
 
-    register_setting('general' , 'megh_height' , array('sanitize_callback' => 'esc_attr') );
-    register_setting('general' , 'megh_width' , array('sanitize_callback' => 'esc_attr') );
+    add_settings_field('megh_height' , __('QR code height', 'megh'), 'meghQrCodeHeight', 'general', 'megh_qr_code');
+    add_settings_field('megh_width' , __('QR code width', 'megh'), 'meghQrCodeWidth', 'general', 'megh_qr_code');
+
+    register_setting('general', 'megh_height', array('sanitize_callback' => 'esc_attr') );
+    register_setting('general', 'megh_width', array('sanitize_callback' => 'esc_attr') );
 
 }
 
+function meghQrCodeSection(){
+    echo "<p>" . __('Set qr code values', 'megh') . "</p>";
+}
 /**
  * Disply height field
  *
