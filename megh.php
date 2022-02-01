@@ -73,9 +73,11 @@ function megh_setting_init(){
 
     add_settings_field('megh_height' , __('QR code height', 'megh'), 'meghQrCodeField', 'general', 'megh_qr_code', array('megh_height') );
     add_settings_field('megh_width' , __('QR code width', 'megh'), 'meghQrCodeField', 'general', 'megh_qr_code', array('megh_width') );
+    add_settings_field('megh_city' , __('Select City', 'megh'), 'meghCityField', 'general', 'megh_qr_code' );
 
     register_setting('general', 'megh_height', array('sanitize_callback' => 'esc_attr') );
     register_setting('general', 'megh_width', array('sanitize_callback' => 'esc_attr') );
+    register_setting('general', 'megh_city', array('sanitize_callback' => 'esc_attr') );
 
 }
 
@@ -86,6 +88,32 @@ function megh_setting_init(){
  */
 function meghQrCodeSection(){
     echo "<p>" . __('Set qr code values', 'megh') . "</p>";
+}
+
+/**
+ * Select city
+ *
+ * @return void
+ */
+function meghCityField(){
+
+    $option = get_option('megh_city');
+
+    $cities = array(
+        'Dhaka',
+        'Rajshahi',
+        'Khulna'
+    );
+
+    printf('<select id="%s" name="%s">', 'megh_city', 'megh_city');
+
+    foreach( $cities as $city ){
+        $selected = '';
+        if( $option == $city ) $selected = 'selected';
+        printf('<option value="%s" %s>%s</option>', $city, $selected, $city);
+    }
+    echo '</select>';
+    
 }
 
 /**
