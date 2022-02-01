@@ -79,6 +79,11 @@ function megh_setting_init(){
 
 }
 
+/**
+ * add a section for Qr code
+ *
+ * @return void
+ */
 function meghQrCodeSection(){
     echo "<p>" . __('Set qr code values', 'megh') . "</p>";
 }
