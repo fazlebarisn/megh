@@ -71,8 +71,8 @@ function megh_setting_init(){
 
     add_settings_section('megh_qr_code', __('Qr Code Section', 'megh'), 'meghQrCodeSection', 'general');
 
-    add_settings_field('megh_height' , __('QR code height', 'megh'), 'meghQrCodeHeight', 'general', 'megh_qr_code');
-    add_settings_field('megh_width' , __('QR code width', 'megh'), 'meghQrCodeWidth', 'general', 'megh_qr_code');
+    add_settings_field('megh_height' , __('QR code height', 'megh'), 'meghQrCodeField', 'general', 'megh_qr_code', array('megh_height') );
+    add_settings_field('megh_width' , __('QR code width', 'megh'), 'meghQrCodeField', 'general', 'megh_qr_code', array('megh_width') );
 
     register_setting('general', 'megh_height', array('sanitize_callback' => 'esc_attr') );
     register_setting('general', 'megh_width', array('sanitize_callback' => 'esc_attr') );
@@ -87,10 +87,25 @@ function megh_setting_init(){
 function meghQrCodeSection(){
     echo "<p>" . __('Set qr code values', 'megh') . "</p>";
 }
+
+/**
+ * pass args and use one function for same type field
+ *
+ * @param [type] $args
+ * @return void
+ */
+function meghQrCodeField( $args ){
+
+    $option = get_option( $args[0] );
+    printf("<input type='text' id='%s' name='%s' value='%s'>" , $args[0] , $args[0] , $option );
+
+}
+
 /**
  * Disply height field
  *
  * @return void
+ * now this function is not using ( meghQrCodeField is using )
  */
 function meghQrCodeHeight(){
     $height = get_option('megh_height');
@@ -101,6 +116,7 @@ function meghQrCodeHeight(){
  * Disply width field
  *
  * @return void
+ * now this function is not using ( meghQrCodeField is using )
  */
 function meghQrCodeWidth(){
     $width = get_option('megh_width');
