@@ -120,6 +120,7 @@ function meghCountryField(){
     $option = get_option('megh_country');
 
     global $megh_countries;
+    $megh_countries = apply_filters( 'megh_country_list' , $megh_countries );
 
     foreach( $megh_countries as $country ){
         $selected = '';
@@ -143,7 +144,8 @@ function meghCityField(){
     printf('<select id="%s" name="%s">', 'megh_city', 'megh_city');
 
     global $megh_cities;
-    
+    $megh_cities = apply_filters( 'megh_city_list' , $megh_cities );
+
     foreach( $megh_cities as $city ){
         $selected = '';
         if( $option == $city ) $selected = 'selected';
