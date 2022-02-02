@@ -92,25 +92,45 @@ function meghQrCodeSection(){
     echo "<p>" . __('Set qr code values', 'megh') . "</p>";
 }
 
+/**
+ * Declare countries 
+ */
+$megh_countries = array(
+    'Bangladesh',
+    'India',
+    'China'
+);
+
+/**
+ * Declare cities 
+ */
+$megh_cities = array(
+    'Dhaka',
+    'Rajshahi',
+    'Khulna'
+);
+
+/**
+ * Checkbox function
+ *
+ * @return void
+ */
 function meghCountryField(){
 
     $option = get_option('megh_country');
 
-    $countries = array(
-        'Bangladesh',
-        'India',
-        'China'
-    );
+    global $megh_countries;
 
-    foreach( $countries as $country ){
+    foreach( $megh_countries as $country ){
         $selected = '';
         if( is_array($option) && in_array($country, $option) ){
             $selected = 'checked'; 
         }
-        printf( '<input type="checkbox" name="megh_country[]" value="%s" %s/>%s<br>', $country, $selected, $country );
+        printf( '<input type="checkbox" name="megh_country[]" value="%s" %s />%s<br>', $country, $selected, $country );
     }
 
 }
+
 /**
  * Select city
  *
@@ -120,15 +140,11 @@ function meghCityField(){
 
     $option = get_option('megh_city');
 
-    $cities = array(
-        'Dhaka',
-        'Rajshahi',
-        'Khulna'
-    );
-
     printf('<select id="%s" name="%s">', 'megh_city', 'megh_city');
 
-    foreach( $cities as $city ){
+    global $megh_cities;
+    
+    foreach( $megh_cities as $city ){
         $selected = '';
         if( $option == $city ) $selected = 'selected';
         printf('<option value="%s" %s>%s</option>', $city, $selected, $city);
