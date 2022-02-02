@@ -74,10 +74,12 @@ function megh_setting_init(){
     add_settings_field('megh_height' , __('QR code height', 'megh'), 'meghQrCodeField', 'general', 'megh_qr_code', array('megh_height') );
     add_settings_field('megh_width' , __('QR code width', 'megh'), 'meghQrCodeField', 'general', 'megh_qr_code', array('megh_width') );
     add_settings_field('megh_city' , __('Select City', 'megh'), 'meghCityField', 'general', 'megh_qr_code' );
+    add_settings_field('megh_country' , __('Select Country', 'megh'), 'meghCountryField', 'general', 'megh_qr_code' );
 
     register_setting('general', 'megh_height', array('sanitize_callback' => 'esc_attr') );
     register_setting('general', 'megh_width', array('sanitize_callback' => 'esc_attr') );
     register_setting('general', 'megh_city', array('sanitize_callback' => 'esc_attr') );
+    register_setting('general', 'megh_country' );
 
 }
 
@@ -90,6 +92,25 @@ function meghQrCodeSection(){
     echo "<p>" . __('Set qr code values', 'megh') . "</p>";
 }
 
+function meghCountryField(){
+
+    $option = get_option('megh_country');
+
+    $countries = array(
+        'Bangladesh',
+        'India',
+        'China'
+    );
+
+    foreach( $countries as $country ){
+        $selected = '';
+        if( is_array($option) && in_array($country, $option) ){
+            $selected = 'checked'; 
+        }
+        printf( '<input type="checkbox" name="megh_country[]" value="%s" %s/>%s<br>', $country, $selected, $country );
+    }
+
+}
 /**
  * Select city
  *
