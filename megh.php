@@ -190,4 +190,15 @@ function meghQrCodeWidth(){
     printf("<input type='text' id='%s' name='%s' value='%s'>" , 'megh_width' , 'megh_width' , $width );
 }
 
-add_action( 'admin_init' , 'megh_setting_init' );
+add_action( 'admin_init', 'megh_setting_init' );
+
+function meghAssets( $screen ){
+
+    if( $screen == 'options-general.php'){
+        wp_enqueue_script( 'megh-minitoggle-css', plugin_dir_url(__FILE__).'/assets/css/minitoggle.css' );
+        wp_enqueue_script( 'megh-minitoggle-js', plugin_dir_url(__FILE__).'/assets/js/minitoggle.js' , array('jquery'), '1.0', true );
+        wp_enqueue_script( 'megh-main-js', plugin_dir_url(__FILE__).'/assets/js/megh-main.js' , array('jquery'), time(), true );
+    }
+    
+}
+add_action( 'admin_enqueue_scripts', 'meghAssets');
