@@ -75,11 +75,13 @@ function megh_setting_init(){
     add_settings_field('megh_width' , __('QR code width', 'megh'), 'meghQrCodeField', 'general', 'megh_qr_code', array('megh_width') );
     add_settings_field('megh_city' , __('Select City', 'megh'), 'meghCityField', 'general', 'megh_qr_code' );
     add_settings_field('megh_country' , __('Select Country', 'megh'), 'meghCountryField', 'general', 'megh_qr_code' );
+    add_settings_field('megh_toggle' , __('Toggle', 'megh'), 'meghToggleField', 'general', 'megh_qr_code' );
 
     register_setting('general', 'megh_height', array('sanitize_callback' => 'esc_attr') );
     register_setting('general', 'megh_width', array('sanitize_callback' => 'esc_attr') );
     register_setting('general', 'megh_city', array('sanitize_callback' => 'esc_attr') );
-    register_setting('general', 'megh_country' );
+    register_setting('general', 'megh_country');
+    register_setting('general', 'megh_toggle');
 
 }
 
@@ -92,6 +94,9 @@ function meghQrCodeSection(){
     echo "<p>" . __('Set qr code values', 'megh') . "</p>";
 }
 
+function meghToggleField(){
+    echo '<div class="toggle"></div>';
+}
 /**
  * Declare countries 
  */
@@ -195,9 +200,9 @@ add_action( 'admin_init', 'megh_setting_init' );
 function meghAssets( $screen ){
 
     if( $screen == 'options-general.php'){
-        wp_enqueue_script( 'megh-minitoggle-css', plugin_dir_url(__FILE__).'/assets/css/minitoggle.css' );
-        wp_enqueue_script( 'megh-minitoggle-js', plugin_dir_url(__FILE__).'/assets/js/minitoggle.js' , array('jquery'), '1.0', true );
-        wp_enqueue_script( 'megh-main-js', plugin_dir_url(__FILE__).'/assets/js/megh-main.js' , array('jquery'), time(), true );
+        wp_enqueue_script( 'megh-minitoggle-css', plugin_dir_url(__FILE__).'assets/css/minitoggle.css' );
+        wp_enqueue_script( 'megh-minitoggle-js', plugin_dir_url(__FILE__).'assets/js/minitoggle.js' , array('jquery'), time(), true );
+        wp_enqueue_script( 'megh-main-js', plugin_dir_url(__FILE__).'assets/js/megh-main.js' , array('jquery'), time(), true );
     }
     
 }
