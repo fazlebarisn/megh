@@ -197,6 +197,12 @@ function meghQrCodeWidth(){
 
 add_action( 'admin_init', 'megh_setting_init' );
 
+/**
+ * Enqueue Scripts
+ *
+ * @param [type] $screen
+ * @return void
+ */
 function meghAssets( $screen ){
 
     if( $screen == 'options-general.php'){
