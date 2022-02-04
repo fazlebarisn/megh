@@ -35,3 +35,54 @@ function meghAssets( $screen ){
     
 }
 add_action( 'admin_enqueue_scripts', 'meghAssets');
+
+/**
+ * Genatare shortcode
+ *
+ * @param [type] $attr
+ * @return void
+ */
+function meghButton( $attr ){
+
+    $default = array(
+        'type' => 'primary',
+        'url' => '',
+        'title' => __('Click', 'megh'),
+    );
+
+    $btn_attr = shortcode_atts( $default , $attr );
+
+    return sprintf( '<a class="%s" href="%s">%s</a>', 
+        $btn_attr['type'],
+        $btn_attr['url'],
+        $btn_attr['title']
+    );
+
+}
+add_shortcode( 'button', 'meghButton' );
+
+/**
+ * Use $content in shortcode
+ *
+ * @param [type] $attr
+ * @param string $content
+ * @return void
+ */
+function meghUc( $attr, $content = 'Click' ){
+
+    $default = array(
+        'type' => 'primary',
+        'url' => 'https://github.com/',
+        'title' => __('Click', 'megh'),
+    );
+
+    $uc_attr = shortcode_atts( $default, $attr ); 
+
+    return sprintf( '<a class="%s" href="%s">%s</a>', 
+        $uc_attr['type'],
+        $uc_attr['url'],
+        do_shortcode( $content ),
+    );
+
+}
+add_shortcode( 'uc', 'meghUc');
