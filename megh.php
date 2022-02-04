@@ -97,6 +97,7 @@ function meghQrCodeSection(){
 function meghToggleField(){
     echo '<div class="toggle"></div>';
 }
+
 /**
  * Declare countries 
  */
