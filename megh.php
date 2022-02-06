@@ -29,37 +29,42 @@ add_action( 'plugins_loaded' , 'meghLoadTextdomain');
  */
 function meghAssets( $screen ){
 
-    if( $screen == 'options-general.php'){
-        wp_enqueue_script( 'megh-main-js', plugin_dir_url(__FILE__).'assets/js/megh-main.js' , array('jquery'), time(), true );
-    }
+    wp_enqueue_style('tinyslider-css', '//cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css', null, '1.0');
+    wp_enqueue_script( 'tinyslider-js', '//cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js', null, '1.0', true );
+
+    wp_enqueue_script( 'megh-main-js', plugin_dir_url(__FILE__) . 'assets/js/megh-main.js', array('jquery'), '1.0', true );
     
 }
 add_action( 'admin_enqueue_scripts', 'meghAssets');
 
 /**
- * Genatare shortcode
+ * Genarate shortcode
  *
  * @param [type] $attr
  * @return void
  */
-function meghButton( $attr ){
+function meghTslider( $attr, $content ){
 
     $default = array(
-        'type' => 'primary',
-        'url' => '',
-        'title' => __('Click', 'megh'),
+        'width' => 800,
+        'height' => 600,
+        'id' => '',
     );
 
-    $btn_attr = shortcode_atts( $default , $attr );
+    $attr = shortcode_atts( $default , $attr );
+    $content = do_shortcode( $content );
+    
+    $shortcode_output = <<<EOD
+        <div id="{$attr['id']}" style="width:{$attr['width']};height:{$attr['height']}">
+            <div class="slider">
+                {$content}
+            </div>
+        </div>
+    EOD;
 
-    return sprintf( '<a class="%s" href="%s">%s</a>', 
-        $btn_attr['type'],
-        $btn_attr['url'],
-        $btn_attr['title']
-    );
-
+    return $shortcode_output;
 }
-add_shortcode( 'button', 'meghButton' );
+add_shortcode( 'tslider', 'meghTslider' );
 
 /**
  * Use $content in shortcode
@@ -68,21 +73,26 @@ add_shortcode( 'button', 'meghButton' );
  * @param string $content
  * @return void
  */
-function meghUc( $attr, $content = 'Click' ){
+function meghTslide( $attr ){
 
     $default = array(
-        'type' => 'primary',
-        'url' => 'https://github.com/',
-        'title' => __('Click', 'megh'),
+        'caption' => '',
+        'id' => '',
+        'size' => 'large'
     );
 
-    $uc_attr = shortcode_atts( $default, $attr ); 
+    $attr = shortcode_atts( $default, $attr ); 
 
-    return sprintf( '<a class="%s" href="%s">%s</a>', 
-        $uc_attr['type'],
-        $uc_attr['url'],
-        do_shortcode( $content ),
-    );
+    $img_src = wp_get_attachment_image_src( $attr['id'], $attr['size'] );
+
+    $shortcode_output = <<<EOD
+        <div class="slide">
+            <p><img src="{$img_src[0]}" alt="{$attr['caption']}"></p>
+            <p>{$attr['caption']}</p>
+        </div>
+    EOD;
+
+    return $shortcode_output;
 
 }
-add_shortcode( 'uc', 'meghUc');
+add_shortcode( 'tinyslide', 'meghTslide');
