@@ -35,7 +35,7 @@ function meghAssets( $screen ){
     wp_enqueue_script( 'megh-main-js', plugin_dir_url(__FILE__) . 'assets/js/megh-main.js', array('jquery'), '1.0', true );
     
 }
-add_action( 'admin_enqueue_scripts', 'meghAssets');
+add_action( 'wp_enqueue_scripts', 'meghAssets');
 
 /**
  * Genarate shortcode
