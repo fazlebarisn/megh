@@ -33,6 +33,7 @@ function megh_display_qr_code( $content ){
     $current_post_url = urldecode( get_the_permalink( $current_post_id ) );
     $current_post_title = get_the_title( $current_post_id );
     $current_post_type = get_post_type( $current_post_id );
+    //var_dump($current_post_type);
 
     // Post type check
     $excluded_post_types = apply_filters( 'megh_excluded_post_types' , array() );
