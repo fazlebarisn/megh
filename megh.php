@@ -30,6 +30,7 @@ add_action( 'plugins_loaded' , 'meghLoadTextdomain');
 function meghAssets(){
     
     wp_enqueue_script( 'megh-main-js', plugin_dir_url(__FILE__).'assets/js/megh-main.js' , array('jquery'), time(), true );
+    wp_enqueue_script( 'megh-main-js', plugin_dir_url(__FILE__).'assets/css/megh-main.css' , array('jquery'), time(), true );
 
 }
 add_action( 'admin_enqueue_scripts', 'meghAssets');
