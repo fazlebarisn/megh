@@ -30,7 +30,27 @@ add_action( 'plugins_loaded' , 'meghLoadTextdomain');
 function meghAssets(){
     
     wp_enqueue_script( 'megh-main-js', plugin_dir_url(__FILE__).'assets/js/megh-main.js' , array('jquery'), time(), true );
-    wp_enqueue_script( 'megh-main-js', plugin_dir_url(__FILE__).'assets/css/megh-main.css' , array('jquery'), time(), true );
+    wp_enqueue_style( 'megh-main-js', plugin_dir_url(__FILE__).'assets/css/megh-main.css' , array(), '1.1', 'all' );
 
 }
-add_action( 'admin_enqueue_scripts', 'meghAssets');
+add_action( 'wp_enqueue_scripts', 'meghAssets');
+
+//include_once plugin_dir_url(__FILE__) . 'includes/functions.php';
+
+function woocommerce_before_single_product_callback(){
+    if( !is_product()){
+        return;
+    }
+    echo "<div class='megh'>";
+    
+}
+add_action( 'woocommerce_before_single_product' , 'woocommerce_before_single_product_callback');
+
+function woocommerce_after_single_product_summary_callback(){
+    if( !is_product()){
+        return;
+    }
+    echo "</div>";
+    
+}
+add_action( 'woocommerce_after_single_product_summary' , 'woocommerce_after_single_product_summary_callback');
