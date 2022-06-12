@@ -50,16 +50,29 @@ function woocommerce_after_single_product_callback() {
     if ( !is_product() ) {
         return;
     }
+    //the_field('questions_1');
+    //var_dump(the_field('questions'));
+    if( null !==get_field('questions') ){
+        $questions = get_field('questions');
+    }
+    
     ?>
     <div class="container">
   <h2>Frequently Asked Questions</h2>
   <div class="accordion">
+    <?php if(isset($questions)){
+        ?>
     <div class="accordion-item">
-      <button id="accordion-button-1" aria-expanded="false"><span class="accordion-title">Why is the moon sometimes out during the day?</span><span class="icon" aria-hidden="true"></span></button>
-      <div class="accordion-content">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-      </div>
+        <button id="accordion-button-1" aria-expanded="false"><span class="accordion-title"><?php echo $questions['questions_1'] ?? $questions['questions_1']; ?></span><span class="icon" aria-hidden="true"></span></button>
+        <div class="accordion-content">
+        <p><?php echo $questions['answer1'] ?? $questions['answer1']; ?></p>
+        </div>
     </div>
+    
+    <?php
+        }  
+    ?>
+
     <div class="accordion-item">
       <button id="accordion-button-2" aria-expanded="false"><span class="accordion-title">Why is the sky blue?</span><span class="icon" aria-hidden="true"></span></button>
       <div class="accordion-content">
