@@ -51,7 +51,7 @@ function woocommerce_after_single_product_callback() {
     }
     if( !empty($questions) ){
       $question_count = count($questions) / 2;
-      //var_dump($question_count);
+      //var_dump($questions);
       ?>
         <div class="container">
         <h2>Frequently Asked Questions</h2>
@@ -60,14 +60,16 @@ function woocommerce_after_single_product_callback() {
             for( $i=1; $i<=$question_count; $i++ ){
               $qs = 'qs_' . $i;
               $ans = 'ans_' .$i;
-          ?>
-            <div class="accordion-item">
-              <button id="accordion-button-1" aria-expanded="false"><span class="accordion-title"><?php echo $questions[$qs] ?? $questions[$qs]; ?></span><span class="icon" aria-hidden="true"></span></button>
-              <div class="accordion-content">
-                <p><?php echo $questions[$ans] ?? $questions[$ans]; ?></p>
+              if( !empty($questions[$qs] ) ){
+            ?>
+              <div class="accordion-item">
+                <button id="accordion-button-1" aria-expanded="false"><span class="accordion-title"><?php echo $questions[$qs] ?? $questions[$qs]; ?></span><span class="icon" aria-hidden="true"></span></button>
+                <div class="accordion-content">
+                  <p><?php echo $questions[$ans] ?? $questions[$ans]; ?></p>
+                </div>
               </div>
-            </div>
-            <?php
+              <?php
+               }
               }
             ?>
           </div>
