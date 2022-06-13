@@ -11,7 +11,7 @@ body {
   font-family: 'Hind', sans-serif;
   background: #fff;
   color: #4d5974;
-  display: flex;
+  /* display: flex; */
   min-height: 100vh;
 }
 .container {
