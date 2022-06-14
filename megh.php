@@ -60,6 +60,7 @@ add_action( 'wp_enqueue_scripts', 'meghAssets' );
  }
 add_filter('woocommerce_product_data_tabs','faq_product_edit_tab');
 
+// add function for input field
 function faq_product_tab_options(){
   ?>
       <div  id="frequently_asked_questions" class="panel woocommerce_options_panel">
@@ -70,41 +71,63 @@ function faq_product_tab_options(){
   <?php 
 }
 
-
 add_filter('woocommerce_product_data_panels','faq_product_tab_options');
 
-  function sfaq_add_field_in_panel(){
 
-    $args = array();
-    $args[] = array(
-        'id'        => 'faq_1',
-        'name'      => 'faq_1',
-        'label'     =>  'Question 1',
-        'class'     =>  'sfaq_input',
-        'type'      =>  'text',
-        'desc_tip'  =>  true,
-        'description'=> 'Add 1st question',
-        'data_type' => 'text'
-    );
+// add input box for faq
 
-    $args[] = array(
-        'id'        => 'faq_ans_1',
-        'name'      => 'faq_ans_1',
-        'label'     =>  'Answer 1',
-        'class'     =>  'sfaq_input',
-        'type'      =>  'text',
-        'desc_tip'  =>  true,
-        'description'=> 'Add 1st Answer',
-        'data_type' => 'text'
-    );
+function sfaq_add_field_in_panel(){
 
-    foreach($args as $arg){
-      woocommerce_wp_text_input($arg);
-    }
+  $args = array();
+  $args[] = array(
+      'id'        => 'faq_1',
+      'name'      => 'faq_1',
+      'label'     =>  'Question 1',
+      'class'     =>  'sfaq_input',
+      'type'      =>  'text',
+      'desc_tip'  =>  true,
+      'description'=> 'Add 1st question',
+      'data_type' => 'text'
+  );
 
+  $args[] = array(
+      'id'        => 'faq_ans_1',
+      'name'      => 'faq_ans_1',
+      'label'     =>  'Answer 1',
+      'class'     =>  'sfaq_input',
+      'type'      =>  'text',
+      'desc_tip'  =>  true,
+      'description'=> 'Add 1st Answer',
+      'data_type' => 'text'
+  );
+
+  foreach($args as $arg){
+    woocommerce_wp_text_input($arg);
   }
 
+}
+
 add_action( 'faq_woocommerce_product_options' , 'sfaq_add_field_in_panel');
+
+// save data
+
+function sfaq_save_field_data( $post_id ){
+
+  $_faq_1 = isset( $_POST['faq_1'] ) ? $_POST['faq_1'] : false;
+  $_faq_ans_1 = isset( $_POST['faq_ans_1'] ) ? $_POST['faq_ans_1'] : false;
+
+  // Updating here 
+  update_post_meta( $post_id,'faq_1', esc_attr( $_faq_1 ) ); 
+  update_post_meta( $post_id,'faq_ans_1', esc_attr( $_faq_ans_1 ) ); 
+  
+}
+add_action( 'woocommerce_process_product_meta', 'sfaq_save_field_data' );
+
+
+
+
+
+
 
 function woocommerce_after_single_product_callback() {
   
