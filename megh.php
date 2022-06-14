@@ -60,8 +60,51 @@ add_action( 'wp_enqueue_scripts', 'meghAssets' );
  }
 add_filter('woocommerce_product_data_tabs','faq_product_edit_tab');
 
+function faq_product_tab_options(){
+  ?>
+      <div  id="frequently_asked_questions" class="panel woocommerce_options_panel">
+          <div class="options_group">
+              <?php do_action( 'faq_woocommerce_product_options' ); ?>
+          </div>
+      </div>
+  <?php 
+}
 
 
+add_filter('woocommerce_product_data_panels','faq_product_tab_options');
+
+  function sfaq_add_field_in_panel(){
+
+    $args = array();
+    $args[] = array(
+        'id'        => 'faq_1',
+        'name'      => 'faq_1',
+        'label'     =>  'Question 1',
+        'class'     =>  'sfaq_input',
+        'type'      =>  'text',
+        'desc_tip'  =>  true,
+        'description'=> 'Add 1st question',
+        'data_type' => 'text'
+    );
+
+    $args[] = array(
+        'id'        => 'faq_ans_1',
+        'name'      => 'faq_ans_1',
+        'label'     =>  'Answer 1',
+        'class'     =>  'sfaq_input',
+        'type'      =>  'text',
+        'desc_tip'  =>  true,
+        'description'=> 'Add 1st Answer',
+        'data_type' => 'text'
+    );
+
+    foreach($args as $arg){
+      woocommerce_wp_text_input($arg);
+    }
+
+  }
+
+add_action( 'faq_woocommerce_product_options' , 'sfaq_add_field_in_panel');
 
 function woocommerce_after_single_product_callback() {
   
