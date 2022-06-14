@@ -1,8 +1,8 @@
 <?php
 /**
-Plugin Name: FAQ for single product page
+Plugin Name: FAQ For Single Product Page
 Plugin URI: https://www.chitabd.com/
-Description: New plugin to learn something new
+Description: Add frequently asked questions in woocommerce product page. 
 Version: 1.0.0
 Author: Fazle Bari
 Author URI: https://www.chitabd.com/
@@ -44,17 +44,18 @@ function woocommerce_after_single_product_callback() {
     }
     //the_field('questions_1');
     //var_dump(the_field('questions'));
-    if( null == get_field('questions') ){
-      return; 
+    if( !function_exists('get_field') || null == get_field('questions') ){
+      return;
     }else{
       $questions = get_field('questions');
     }
+
     if( !empty($questions) ){
       $question_count = count($questions) / 2;
       //var_dump($questions);
       ?>
         <div class="container">
-        <h2>Frequently Asked Questions</h2>
+          <h2>Frequently Asked Questions</h2>
           <div class="accordion">
           <?php 
             for( $i=1; $i<=$question_count; $i++ ){
@@ -69,6 +70,8 @@ function woocommerce_after_single_product_callback() {
                 </div>
               </div>
               <?php
+               }else{
+                echo "<p>No question!</p>";
                }
               }
             ?>
