@@ -37,6 +37,32 @@ add_action( 'wp_enqueue_scripts', 'meghAssets' );
 
 //include_once plugin_dir_url(__FILE__) . 'includes/functions.php';
 
+/**
+ * add new tab in product page
+ * we will save data with this
+ */
+
+ function faq_product_edit_tab( $product_data_tab ){
+
+  $faq_tab['frequently_asked_questions'] = array(
+    'label' => __('FAQ','pfaq'),
+    'target'   => 'frequently_asked_questions', //This is targetted div's id
+    'class'     => array( 'hide_if_downloadable','hide_if_grouped' ), //'hide_if_grouped',
+    );
+
+    $position = 3; // Change this for desire position 
+    $tabs = array_slice( $product_data_tab, 0, $position, true ); // First part of original tabs 
+    $tabs = array_merge( $tabs, $faq_tab ); // Add new 
+    $tabs = array_merge( $tabs, array_slice( $product_data_tab, $position, null, true ) );
+
+    return $tabs;
+
+ }
+add_filter('woocommerce_product_data_tabs','faq_product_edit_tab');
+
+
+
+
 function woocommerce_after_single_product_callback() {
   
     if ( !is_product() ) {
